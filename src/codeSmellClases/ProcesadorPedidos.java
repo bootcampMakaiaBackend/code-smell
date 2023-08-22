@@ -3,21 +3,21 @@ package codeSmellClases;
 import codeSmellMetodosLargos.negocio.Pedido;
 
 public class ProcesadorPedidos {
+
+    //relaciones de las clases.
+    private Notificador notificador;
+    private Reporte reporte;
+
+    public ProcesadorPedidos(Notificador notificador) {
+        this.notificador = notificador;
+    }
+
     // Métodos para procesar pedidos
     public void procesarPedido(Pedido pedido) {
         // Lógica para procesar el pedido
     }
 
-    // Métodos para generar reportes
-    public void generarReporteVentas() {
-        // Lógica para generar el reporte de ventas
+    public void setReporte(Reporte reporte){
+        this.reporte = reporte;
     }
-
-    // Métodos para enviar notificaciones
-    public void enviarNotificacionCliente(Cliente cliente) {
-        // Lógica para enviar notificación al cliente
-    }
-
-    // ...
-    // Muchas más responsabilidades
 }

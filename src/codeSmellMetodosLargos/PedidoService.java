@@ -10,16 +10,13 @@ import codeSmellMetodosLargos.negocio.Producto;
 public class PedidoService {
 
     public void procesarPedido(Pedido pedido) {
+        validarPedido(pedido);
+        procesarItemsDelPedido(pedido);
+        PedidoDAO.actualizar(pedido);
+        Notificador.notificarPedidoProcesado(pedido.getCliente());
+    }
 
-        // Validaciones iniciales del pedido
-        if (pedido == null) {
-            throw new IllegalArgumentException("El pedido no puede ser nulo");
-        }
-        if (pedido.getItems().isEmpty()) {
-            throw new IllegalArgumentException("El pedido no tiene items");
-        }
-
-        // Procesamiento del pedido
+    private void procesarItemsDelPedido(Pedido pedido) {
         for (ItemPedido item : pedido.getItems()) {
             Producto producto = item.getProducto();
             if (producto.getStock() >= item.getCantidad()) {
@@ -29,10 +26,14 @@ public class PedidoService {
                 item.setEstado(EstadoItem.SIN_STOCK);
             }
         }
+    }
 
-        PedidoDAO.actualizar(pedido);
-
-        // Envío de notificación al cliente
-        Notificador.notificarPedidoProcesado(pedido.getCliente());
+    private void validarPedido(Pedido pedido) {
+        if (pedido == null) {
+            throw new IllegalArgumentException("El pedido no puede ser nulo");
+        }
+        if (pedido.getItems().isEmpty()) {
+            throw new IllegalArgumentException("El pedido no tiene items");
+        }
     }
 }

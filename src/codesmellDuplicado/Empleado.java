@@ -10,28 +10,31 @@ public class Empleado {
         double salarioTotal = salarioBase;
 
         if(tipoEmpleado == "VINCULADO") {
-            // Cálculo de horas extras
-            if (horasExtras > 0) {
-                salarioTotal += horasExtras * 25; // Tarifa por hora extra
-            }
-            // Cálculo de bonificaciones
-            if (bonificaciones > 0) {
-                salarioTotal += bonificaciones * 0.1; // 10% de bonificación
-            }
+            salarioTotal = calcularPagosExtras(salarioTotal,
+                    0.25,
+                    0.1);
         }
 
         if(tipoEmpleado == "PRESTADOR") {
-            // Cálculo de horas extras
-            if (horasExtras > 0) {
-                salarioTotal += horasExtras * 1; // Tarifa por hora extra
-            }
-            // Cálculo de bonificaciones
-            if (bonificaciones > 0) {
-                salarioTotal += bonificaciones * 0.05; // 10% de bonificación
-            }
+            salarioTotal = calcularPagosExtras(salarioTotal,
+                    0.1,
+                    0.05);
+
         }
+        return salarioTotal;
+    }
 
-
+    private double calcularPagosExtras(double salarioTotal,
+                                       double porcentajeHoraExtra,
+                                       double porcentajeBonificacion) {
+        // Cálculo de horas extras
+        if (horasExtras > 0) {
+            salarioTotal += horasExtras * porcentajeHoraExtra;
+        }
+        // Cálculo de bonificaciones
+        if (bonificaciones > 0) {
+            salarioTotal += bonificaciones * porcentajeBonificacion;
+        }
         return salarioTotal;
     }
 }
